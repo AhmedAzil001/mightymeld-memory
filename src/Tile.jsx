@@ -12,8 +12,8 @@ export function Tile({ content: Content, flip, state, mode }) {
     case "flipped":
       return (
         <Front
-          className={`inline-block h-[4.6rem] w-[4.6rem] bg-cyan-600 rounded-xl text-cyan-200 animate-scale ${
-            mode && "bg-slate-400 text-slate-800"
+          className={`inline-block h-[4.6rem] w-[4.6rem] bg-cyan-600 rounded-xl text-cyan-200 ${
+            mode ? "bg-slate-300 text-slate-700" : "animate-scale"
           }`}
         >
           <Content
