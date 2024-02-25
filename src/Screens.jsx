@@ -2,6 +2,7 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import * as icons from "react-icons/gi";
 import { Tile } from "./Tile";
+import { IoMdMoon } from "react-icons/io";
 
 export const possibleTileContents = [
   icons.GiHearts,
@@ -16,17 +17,45 @@ export const possibleTileContents = [
   icons.GiOpenBook,
 ];
 
-export function StartScreen({ start }) {
+export function StartScreen({ start, mode, handleMode }) {
   return (
-    <div>
-      <button onClick={start} className="bg-gray-400 text-white p-3">
-        Play
+    <div
+      className={`grid h-[100vh] place-items-center font-sans ${
+        mode && "bg-slate-900"
+      }`}
+    >
+      <button
+        className={`w-[10%] h-9 absolute top-5 right-5 flex items-center justify-center `}
+        onClick={handleMode}
+      >
+        {mode ? <IoMdMoon size="2xl" color="white" /> : <IoMdMoon size="2xl" />}
       </button>
+      <div
+        className={`w-[80%] sm:w-[50%] md:w-[30%] h-[45%] flex justify-around flex-col items-center rounded-xl bg-cyan-100 ${
+          mode && "bg-slate-100"
+        }`}
+      >
+        <div className={`flex flex-col items-center h-[50%] justify-around`}>
+          <h1 className={`text-4xl font-bold text-cyan-500`}>Memory</h1>
+          <p className={`text-cyan-500 font-semibold`}>
+            Flip over tiles looking for pairs
+          </p>
+        </div>
+
+        <button
+          onClick={start}
+          className={`bg-cyan-500 text-white text-2xl p-3 rounded-full w-[50%] flex items-center justify-center drop-shadow-md ${
+            mode && "bg-cyan-300"
+          }`}
+        >
+          Play
+        </button>
+      </div>
     </div>
   );
 }
 
-export function PlayScreen({ end }) {
+export function PlayScreen({ end, mode, handleMode }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
 
@@ -109,12 +138,50 @@ export function PlayScreen({ end }) {
 
   return (
     <>
-      <div>
-        {getTiles(6).map((tile, i) => (
-          <Tile key={i} flip={() => flip(i)} {...tile} />
-        ))}
+      <div
+        className={`w-full h-[100vh] flex items-center justify-center p-5 flex-col ${
+          mode && "bg-slate-900"
+        }`}
+      >
+        <button
+          className={`w-[10%] h-9 absolute top-5 right-5`}
+          onClick={handleMode}
+        >
+          {mode ? (
+            <IoMdMoon size="2xl" color="white" />
+          ) : (
+            <IoMdMoon size="2xl" />
+          )}
+        </button>
+        <div
+          className={`w-full h-10 m-5 flex items-center justify-center flex-row`}
+        >
+          <h4
+            className={`text-xl font-semibold text-cyan-400 ${
+              mode && "text-white"
+            }`}
+          >
+            Tries
+          </h4>
+          <p
+            className={`flex justify-center items-center ml-3 w-7 bg-cyan-300 text-cyan-700 rounded ${
+              mode && "bg-slate-200"
+            }`}
+          >
+            {tryCount}
+          </p>
+        </div>
+
+        <div
+          className={`grid grid-cols-4 gap-4 p-3 rounded bg-cyan-100 ${
+            mode && "bg-slate-100"
+          }`}
+        >
+          {getTiles(16).map((tile, i) => (
+            <Tile key={i} flip={() => flip(i)} {...tile} mode={mode} />
+          ))}
+        </div>
       </div>
-      {tryCount}
     </>
   );
 }
