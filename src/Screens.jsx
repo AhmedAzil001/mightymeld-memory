@@ -139,7 +139,7 @@ export function PlayScreen({ end, mode, handleMode }) {
   return (
     <>
       <div
-        className={`w-full h-[100vh] flex items-center justify-center p-5 flex-col ${
+        className={`w-full h-[100vh] flex items-center justify-center flex-col ${
           mode && "bg-slate-900"
         }`}
       >
